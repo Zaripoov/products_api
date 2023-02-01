@@ -20,7 +20,7 @@ class RegistrationController extends ApiController
             );
         };
 
-        $user = CreateUserService::createUser($request->getEmail(), $request->getPasswordUser(), $request->getPhone());
+        $user = CreateUserService::createUser($request->getEmail(), $request->getPasswordUser(), $request->getPhone(), $request->getName());
 
         if ($user) {
             return $this->responseSuccess([

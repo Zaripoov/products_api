@@ -9,11 +9,11 @@ use Throwable;
 
 class CreateUserService
 {
-    public static function createUser($email, $password, $phone): bool|User
+    public static function createUser($email, $password, $phone , $name): bool|User
     {
         try {
             $user = new User();
-            $user->name = explode('@', $email)[0];
+            $user->name = $name;
             $user->phone = $phone;
             $user->email = $email;
             $user->password = Hash::make($password);

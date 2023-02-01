@@ -15,6 +15,25 @@ class GetUserService
         })->first();
     }
 
+    public static function getUserByEmail($email): ?User
+    {
+        return User::whereEmail($email)->first();
+    }
+
+    public static function getUserByPhone($phone): ?User
+    {
+        return User::wherePhone($phone)->first();
+    }
+
+    public static function defineLogin($type, $login): ?User
+    {
+        return match ($type) {
+            'email' => self::getUserByEmail($login),
+            'phone' => self::getUserByPhone($login),
+            default => null,
+        };
+    }
+
     public static function checkHash(User $user, $password): bool
     {
         if (!Hash::check($password, $user->password)) {

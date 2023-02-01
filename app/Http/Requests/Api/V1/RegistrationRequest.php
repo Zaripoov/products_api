@@ -26,10 +26,16 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required', 'string', 'min:2', 'max:99'],
             'email' => ['required', 'email', 'string', 'min:3', 'max:255'],
-            'phone' => ['required', 'string', 'min:5', 'max:20', new PhoneRule],
-            'password' => ['required', new PasswordRule, 'confirmed'],
+            'phone' => ['required', 'string', 'min:5', 'max:15', new PhoneRule],
+            'password' => ['required', 'confirmed', new PasswordRule],
         ];
+    }
+
+    public function getName()
+    {
+        return $this->get('name');
     }
 
     public function getEmail()

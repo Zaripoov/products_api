@@ -19,15 +19,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('api.')->middleware(['return-json'])->group(function () {
 
-    Route::prefix('v1')->group(function () {
+    Route::prefix('v1')->name('v1.')->group(function () {
 
         Route::get('ping', [PingController::class, 'ping']);
 
-        Route::post('login', [LoginController::class, 'login']);
+        Route::post('login', [LoginController::class, 'login'])->name('login');
 
-        Route::post('registration', [RegistrationController::class, 'registration']);
+        Route::post('registration', [RegistrationController::class, 'registration'])->name('registration');
 
-        Route::get('products', [ProductsController::class, 'list']);
+        Route::middleware(['auth:sanctum'])->group(function (){
+            Route::get('products', [ProductsController::class, 'list'])->name('products.list');
+        });
 
     });
 

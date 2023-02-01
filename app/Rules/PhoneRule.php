@@ -3,29 +3,25 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Str;
 
 class PhoneRule implements Rule
 {
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    protected int $length = 12;
 
-    /**
-     * Determine if the validation rule passes.
-     *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
-     */
+    protected bool $requireNumber = true;
+
+
     public function passes($attribute, $value): bool
     {
-        return preg_match('%^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$%i', $value) && strlen($value) >= 10;
+        $value = is_scalar($value) ? (string)$value : '';
+
+        if ($this->requireNumber && !preg_match("/^\+?7\d{10}$/", trim($value))) {
+            return false;
+        }
+
+        return Str::length($value) >= $this->length;
+
     }
 
     /**
@@ -35,6 +31,6 @@ class PhoneRule implements Rule
      */
     public function message(): string
     {
-        return 'The validation error message.';
+        return 'Format: +79998754654';
     }
 }
