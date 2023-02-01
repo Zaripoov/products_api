@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\LoginController;
 use App\Http\Controllers\Api\V1\PingController;
+use App\Http\Controllers\Api\V1\ProductsController;
 use App\Http\Controllers\Api\V1\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::name('api.')->middleware(['return-json'])->group(function () {
         Route::post('login', [LoginController::class, 'login']);
 
         Route::post('registration', [RegistrationController::class, 'registration']);
+
+        Route::get('products', [ProductsController::class, 'list']);
 
     });
 
