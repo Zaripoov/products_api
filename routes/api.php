@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\LoginController;
+use App\Http\Controllers\Api\V1\PingController;
+use App\Http\Controllers\Api\V1\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::name('api.')->middleware(['return-json'])->group(function () {
+
+    Route::prefix('v1')->group(function () {
+
+        Route::get('ping', [PingController::class, 'ping']);
+
+        Route::post('login', [LoginController::class, 'login']);
+
+        Route::post('registration', [RegistrationController::class, 'registration']);
+
+    });
+
+    Route::fallback(function () {
+        return response()->json([
+            'error' => __('Not found'),
+        ], 404);
+    });
 });
+
+
