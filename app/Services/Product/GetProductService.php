@@ -11,6 +11,7 @@ class GetProductService
     public static function getProductsIdByAttributes(array $properties): array
     {
 
+        /** @var ProductsAttributes $attributes */
         $attributes = ProductsAttributes::query()->select(['product_id']);
 
         foreach ($properties as $key => $value) {
@@ -32,6 +33,7 @@ class GetProductService
             $attributes = self::getProductsIdByAttributes($properties);
         }
 
+        /** @var Products $products */
         $products = Products::query();
 
         if (isset($attributes))
@@ -42,6 +44,7 @@ class GetProductService
         $items = [];
 
         foreach ($products->items() as $model) {
+            /** @var  Products $model */
             $items[] = new ProductResource($model);
         }
 
