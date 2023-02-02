@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class ApiController extends Controller
+abstract class ApiController extends Controller
 {
     public function responseSuccess(?array $data=[]): JsonResponse
     {
